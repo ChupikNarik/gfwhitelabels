@@ -1,0 +1,110 @@
+include mixins.jade
++breadcrumbs('Tabs', 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR',[['home', '/',], [ 'tabs']])
+
+section
+	.container
+		.row
+			.col-lg-12
+				h2.text-uppercase.text-lg-center Standart tabs
+				ul.nav.nav-tabs.text-uppercase#myTab(role="tablist")
+					li.nav-item
+						a.nav-link.active#tab-one(
+							data-toggle="tab"
+							href="#one"
+							role="tab"
+							aria-controls="tab-one"
+							aria-expanded="true"
+						) First tab
+					li.nav-item
+						a.nav-link#tab-two(
+							data-toggle="tab"
+							href="#two"
+							role="tab"
+							aria-controls="tab-two"
+							aria-expanded="false"
+						) Second tab
+				.tab-content#myTabContent
+					.tab-pane.fade.active.in#one(
+						role="tabpanel"
+						aria-labelledby="tab-one"
+						aria-expanded="true"
+					)
+						p Hello. I first tab
+					.tab-pane.fade#two(
+						role="tabpanel"
+						aria-labelledby="tab-two"
+						aria-expanded="false"
+					)
+						p Hello. I second tab
+			br
+			br
+			.col-lg-12
+				h2.text-uppercase.text-lg-center Minimal tabs
+				br
+				br
+				ul.nav.nav-tabs.text-lg-center.text-uppercase.minimal-tabs#myTabMinimal(role="tablist")
+					li.nav-item
+						a.nav-link.active#tab-one-minimal(
+							data-toggle="tab"
+							href="#one-minimal"
+							role="tab"
+							aria-controls="tab-one-minimal"
+							aria-expanded="true"
+						) First tab
+					li.nav-item
+						a.nav-link#tab-two-minimal(
+							data-toggle="tab"
+							href="#two-minimal"
+							role="tab"
+							aria-controls="tab-two-minimal"
+							aria-expanded="false"
+						) Second tab
+				.tab-content#myTabMinimalContent
+					.tab-pane.fade.active.in#one-minimal(
+						role="tabpanel"
+						aria-labelledby="tab-one-minimal"
+						aria-expanded="true"
+					)
+						p Hello. I first minimal tab
+					.tab-pane.fade#two-minimal(
+						role="tabpanel"
+						aria-labelledby="tab-two-minimal"
+						aria-expanded="false"
+					)
+						p Hello. I second minimal tab
+			br
+			br
+			.col-lg-12
+				h2.text-uppercase.text-lg-center Big tabs
+				br
+				br
+				ul.nav.nav-tabs.text-uppercase.big-tabs#myTaBbig(role="tablist")
+					li.nav-item
+						a.nav-link.active#tab-one-big(
+							data-toggle="tab"
+							href="#one-big"
+							role="tab"
+							aria-controls="tab-one-big"
+							aria-expanded="true"
+						) First tab
+					li.nav-item
+						a.nav-link#tab-two-big(
+							data-toggle="tab"
+							href="#two-big"
+							role="tab"
+							aria-controls="tab-two-big"
+							aria-expanded="false"
+						) Second tab
+				.tab-content#myTabBigContent
+					.tab-pane.fade.active.in#one-big(
+						role="tabpanel"
+						aria-labelledby="tab-one-big"
+						aria-expanded="true"
+					)
+						p Hello. I first big tab
+					.tab-pane.fade#two-big(
+						role="tabpanel"
+						aria-labelledby="tab-two-big"
+						aria-expanded="false"
+					)
+						p Hello. I second big tab
