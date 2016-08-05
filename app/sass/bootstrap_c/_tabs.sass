@@ -1,0 +1,35 @@
+.nav-tabs
+	border-width: 1px
+	.nav-item
+		margin-bottom: -1px
+		.nav-link
+			letter-spacing: 1px
+			border-width: 1px
+
+.nav-tabs.minimal-tabs
+	border-bottom: none
+
+	.nav-item
+		display: inline-block
+		float: none
+		margin: 0 13px
+
+		.nav-link
+			padding: 0.21rem 1.25rem 0.25rem
+			border-radius: 100px
+
+		.nav-link.active
+			border-color: $nav-tabs-active-link-hover-border-color
+
+.nav-tabs.big-tabs
+	.nav-item
+		.nav-link
+			padding: 0.7rem 1.25rem
+			letter-spacing: 0.1875rem
+			font-size: 1.125rem
+
+.tab-content
+	padding-top: 25px
+
+.big-tabs ~ .tab-content
+	padding-top: 50px
