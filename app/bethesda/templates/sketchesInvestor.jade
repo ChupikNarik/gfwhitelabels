@@ -1,0 +1,223 @@
+include mixins.jade
+
++breadcrumbs(page.title, 'Subtitle', [['home', '/',], [ 'current', page.get_absolute_url]])
+
+section.investor_table
+	.container
+		ul.nav.nav-tabs.big-tabs.text-uppercase#myTab(role="tablist")
+			li.nav-item
+				a.nav-link.active#home-tab(
+					data-toggle="tab"
+					href="#home"
+					role="tab"
+					aria-controls="home"
+					aria-expanded="true"
+				) Active
+			li.nav-item
+				a.nav-link#profile-tab(
+					data-toggle="tab"
+					href="#profile"
+					role="tab"
+					aria-controls="profile"
+					aria-expanded="false"
+				) Historical
+		.tab-content#myTabContent
+			.tab-pane.fade.active.in#home(
+				role="tabpanel"
+				aria-labelledby="home-tab"
+				aria-expanded="true"
+			)
+				.one_table
+					.img_column.text-lg-center
+						img(src="/img/investor_test_img.png" alt="")
+						span.img_tab 02 Days Left
+						p.text-uppercase Company name
+					.right-columns.small-column
+						.one_line
+							.col40
+								span.light_grey Amount Invested
+							.col60
+								span.bold-grey.font-weight-bold $25K
+						.one_line
+							.col40
+								span.light_grey Investment Day
+							.col60
+								span.dark_grey 15.06.2016
+						.one_line
+							.col40
+								span.light_grey Security Type
+							.col60
+								span.dark_grey 09879*****
+						.one_line
+							.col40
+								span.light_grey Investment Terms
+							.col60
+								span.dark_grey Revenue Share
+						.one_line
+							.col40
+								span.light_grey Perks
+							.col60
+								span.dark_grey Rewards
+						.clearfix
+					.right_buttons
+						h4 Downloadable Files
+						a.one_btn(href="") Investor Presentation
+						a.one_btn(href="") Form C
+						a.one_btn(href="") Financials
+						a.one_btn(href="") Agreement
+					.bottom_column
+						.top_descript
+							.left_text
+								b $1,5MM
+								span Raised
+							.right_text
+								b $500K
+								span Goal
+							p.percents 150$ Funded
+							.clearfix
+						.progress_line_container
+							progress.progress(
+								value="10"
+								max="100"
+							)
+						.text-lg-center
+							a.btn.btn-large.text-uppercase.view_campaign view campaing
+								i.fa.fa-angle-right(
+									aria-hidden="true"
+								)
+						.cancel_invest
+							a.font-weight-bold(href="") Cancel investment
+					.clearfix
+
+				.one_table
+					.img_column.text-lg-center
+						img(src="/img/investor_test_img.png" alt="")
+						span.img_tab 02 Days Left
+						p.text-uppercase Company name
+					.right-columns.small-column
+						.one_line
+							.col40
+								span.light_grey Amount Invested
+							.col60
+								span.bold-grey.font-weight-bold $25K
+						.one_line
+							.col40
+								span.light_grey Investment Day
+							.col60
+								span.dark_grey 15.06.2016
+						.one_line
+							.col40
+								span.light_grey Security Type
+							.col60
+								span.dark_grey 09879*****
+						.one_line
+							.col40
+								span.light_grey Investment Terms
+							.col60
+								span.dark_grey Revenue Share
+						.one_line
+							.col40
+								span.light_grey Perks
+							.col60
+								span.dark_grey Rewards
+						.clearfix
+					.right_buttons
+						h4 Downloadable Files
+						a.one_btn(href="") Investor Presentation
+						a.one_btn(href="") Form C
+						a.one_btn(href="") Financials
+						a.one_btn(href="") Agreement
+					.bottom_column
+						.top_descript
+							.left_text
+								b $1,5MM
+								span Raised
+							.right_text
+								b $500K
+								span Goal
+							p.percents 150$ Funded
+							.clearfix
+						.progress_line_container
+							progress.progress(
+								value="10"
+								max="100"
+							)
+						.text-lg-center
+							a.btn.btn-large.text-uppercase.view_campaign view campaing
+								i.fa.fa-angle-right(
+									aria-hidden="true"
+								)
+						.cancel_invest
+							a.font-weight-bold(href="") Cancel investment
+					.clearfix
+			.tab-pane.fade#profile(
+				role="tabpanel"
+				aria-labelledby="profile-tab"
+				aria-expanded="false"
+			)
+				.one_table
+					.img_column.text-lg-center
+						img(src="/img/investor_test_img.png" alt="")
+						span.successfull.text-lg-right Succesfully
+							br
+							| funded campaign
+						span.end-date.text-lg-right 02 Days Left
+							br
+							| End Date
+						p.text-uppercase Company name
+					.right-columns.small-column
+						.one_line
+							.col40
+								span.light_grey Amount Invested
+							.col60
+								span.bold-grey.font-weight-bold $25K
+						.one_line
+							.col40
+								span.light_grey Investment Day
+							.col60
+								span.dark_grey 15.06.2016
+						.one_line
+							.col40
+								span.light_grey Security Type
+							.col60
+								span.dark_grey 09879*****
+						.one_line
+							.col40
+								span.light_grey Investment Terms
+							.col60
+								span.dark_grey Revenue Share
+						.one_line
+							.col40
+								span.light_grey Perks
+							.col60
+								span.dark_grey Rewards
+						.clearfix
+					.right_buttons
+						h4 Downloadable Files
+						a.one_btn(href="") Investor Presentation
+						a.one_btn(href="") Form C
+						a.one_btn(href="") Financials
+						a.one_btn(href="") Agreement
+					.bottom_column
+						.top_descript
+							.left_text
+								b $1,5MM
+								span Raised
+							.right_text
+								b $500K
+								span Goal
+							p.percents 150$ Funded
+							.clearfix
+						.progress_line_container
+							progress.progress(
+								value="10"
+								max="100"
+							)
+						.text-lg-center
+							a.btn.btn-large.text-uppercase.view_campaign view campaing
+								i.fa.fa-angle-right(
+									aria-hidden="true"
+								)
+						.cancel_invest
+							a.font-weight-bold(href="") Cancel investment
+					.clearfix
