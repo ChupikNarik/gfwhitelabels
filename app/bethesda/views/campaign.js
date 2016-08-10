@@ -33,7 +33,7 @@ define(function() {
                 require([
                     '/js/photoswipe.js', 
                     '/js/photoswipe-ui-default.js', 
-                    ], (appears, PhotoSwipe, PhotoSwipeUI_Default) => {
+                    ], (PhotoSwipe, PhotoSwipeUI_Default) => {
                         this.$el.html(
                             window.campaignDetail({
                                 serverUrl: serverUrl,
@@ -80,9 +80,11 @@ define(function() {
         investment: Backbone.View.extend({
             events: {
                 'submit form': 'submit',
+                'keyup #amount': 'amountUpdate',
             },
             initialize: function(options) {
                 this.campaignModel = options.campaignModel;
+                this.fields = options.fields;
             },
 
             render: function() {
@@ -90,6 +92,7 @@ define(function() {
                     window.campaignInvestment({
                         serverUrl: serverUrl,
                         Urls: Urls,
+                        fields: this.fields,
                         campaignModel: this.campaignModel,
                         campaign: this.campaignModel.toJSON()
                     })
@@ -119,14 +122,11 @@ define(function() {
                                 {trigger: false, replace: false}
                             );
 
-                            app.views.investment = {};
-                            app.views.investment = new this.investmentThankYou({
-                                el: '#content',
-                                model: data,
-                                campaignModel: this.campaignModel,
-                            });
-                            app.views.investment.render();
-                            app.cache[window.location.pathname] = app.views.investment.$el.html();
+                            $('#content').html(investmentThankYou({
+                                investment: data,
+                                campaign: this.campaignModel.toJSON()
+                            }));
+                            app.cache[window.location.pathname] = $('#content').html();
                             app.hideLoading();
                         });
                 } else {
@@ -137,6 +137,22 @@ define(function() {
                     }
                 }
             },
+
+            amountUpdate: function(e) {
+                var amount = parseInt(e.currentTarget.value);
+                if(amount >= 5000) {
+                    alert('show popover');
+                }
+
+                this.$('.perk').each((i, el) => {
+                    if(parseInt(el.dataset.from) <= amount) {
+                        $('.perk').removeClass('active');
+                        $('.perk .fa-check').remove();
+                        el.classList.add('active');
+                        $(el).find('.list-group-item-heading').append('<i class="fa fa-check"></i>');
+                    }
+                });
+            }
         }),
 
         investmentThankYou: Backbone.View.extend({
