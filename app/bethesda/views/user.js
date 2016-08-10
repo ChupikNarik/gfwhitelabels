@@ -4,13 +4,18 @@ define(function() {
             events: {
                 'submit .login-form': 'login',
             },
+
             initialize: function(options) {
-                this.template = options.template;
+                this.login_fields = options.login_fields;
+                this.register_fields = options.register_fields;
             },
 
             render: function() {
                 this.$el.html(
-                    window.userLogin({})
+                    window.userLogin({
+                        login_fields: this.login_fields,
+                        register_fields: this.register_fields
+                    })
                 );
                 return this;
             },
@@ -31,8 +36,8 @@ define(function() {
                         if(xhr.hasOwnProperty('key')) {
                             localStorage.setItem('token', xhr.key);
                             setTimeout(function() {
-                                window.location = '/account/profile' //data.next ? data.next : '/account/profile'
-                            }, 100);
+                                window.location = '/' //data.next ? data.next : '/account/profile'
+                            }, 200);
                         } else {
                             Backbone.Validation.callbacks.invalid(                                 
                               form, '', 'Server return no authentication data'
@@ -62,6 +67,10 @@ define(function() {
         }),
 
         profile: Backbone.View.extend({
+            initialize: function(options) {
+                this.fields = options.fields
+            },
+
             events: {
                 'submit form': 'update',
             },
@@ -89,6 +98,7 @@ define(function() {
                         window.userProfile({
                             serverUrl: serverUrl,
                             user: app.user.toJSON(),
+                            fields: this.fields
                         })
                     );
                     //createFileDropzone('image', 'avatars', '', function() { console.log('hello'); });

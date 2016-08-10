@@ -117,9 +117,11 @@ app.on('urlsReady', function() {
           'api/campaign/:id/invest': 'campaignInvestment',
           'sketches/:name': 'sketches',
           'page/:id/': 'pageDetail',
+          'page/:id': 'pageDetail',
           'account/profile': 'accountProfile',
-          'account/login/': 'login',
-          'account/logout/': 'logout',
+          'company/create': 'createCompany',
+          'account/login': 'login',
+          'account/logout': 'logout',
           'account/dashboard/issuer': 'dashboardIssuer',
           'account/dashboard/investor': 'dashboardInvestor',
         },
@@ -197,16 +199,15 @@ app.on('urlsReady', function() {
         },
 
         campaignDetail: function(id) {
-            requirejs(['models/campaign', 'views/campaign', '/templates_js/campaignDetail.js', ], (model, view, campaignDetailT) => {
+            requirejs(['models/campaign', 'views/campaign', ], (model, view) => {
 
                 app.getModel('campaign', model.model, id, function(model) {
                     app.views.campaign[id] = new view.detail({
                         el: '#content',
                         model: model,
-                        template: campaignDetailT,
                     });
                     app.views.campaign[id].render();
-                    app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
+                    //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
                     $('#content').scrollTo();
 
                     app.hideLoading();
@@ -215,49 +216,87 @@ app.on('urlsReady', function() {
         },
                                                                                       
         campaignInvestment: function(id) {
-            requirejs(['models/campaign', 'models/investment', 'views/campaign', ], (model, investModel, view) => {
+            if(!app.user.is_anonymous()) {
+                requirejs(['models/campaign', 'models/investment', 'views/campaign', ], (model, investModel, view) => {
 
-                app.getModel('campaign', model.model, id, function(campaignModel) {
-                    var i = new view.investment({
-                        el: '#content',
-                        model: new investModel.model(),
-                        campaignModel: campaignModel,
+                    app.getModel('campaign', model.model, id, function(campaignModel) {
+                        $.ajax(_.extend({
+                                url: serverUrl + Urls['investment-list'](),
+                        }, defaultOptionsRequest)).done((response) => {
+                            var i = new view.investment({
+                                el: '#content',
+                                model: new investModel.model(),
+                                campaignModel: campaignModel,
+                                fields: response.actions.POST
+                            });
+                            i.render();
+                            //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
+                            $('#content').scrollTo();
+
+                            app.hideLoading();
+                        })
                     });
-                    i.render();
-                    //app.views.campaign[id].render();
-                    //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
-
-                    app.hideLoading();
                 });
-
-            });
+            } else {
+                app.routers.navigate(
+                    '/account/login', 
+                    {trigger: true, replace: true}
+                );
+            }
         },
 
         accountProfile: function() {
-            app.on('menuReady', function(data) {
-                // Dirty hack, fix that
-                if(window.location.pathname == '/account/profile') {
-                console.log('account profile');
-                if(app.user.get('token') != '') {
-                    requirejs(['views/user', ], (view) => {
+            if(!app.user.is_anonymous()) {
+                requirejs(['views/user', ], (view) => {
+                    $.ajax(_.extend({
+                            url: serverUrl + Urls['rest_user_details'](),
+                        }, defaultOptionsRequest)
+                    ).done((response) => {
                         var i = new view.profile({
                             el: '#content',
                             model: app.user,
+                            fields: response.actions.PUT
                         });
                         i.render();
                         //app.views.campaign[id].render();
-                        app.cache[window.location.pathname] = i.$el.html();
+                        //app.cache[window.location.pathname] = i.$el.html();
 
                         app.hideLoading();
                     });
-                } else {
-                    app.routers.navigate(
-                        '/account/login/', 
-                        {trigger: true, replace: true}
-                    );
-                }
-                }
-            });
+                });
+            } else {
+                app.routers.navigate(
+                    '/account/login', 
+                    {trigger: true, replace: true}
+                );
+            }
+        },
+
+        createCompany: function() {
+            if(!app.user.is_anonymous()) {
+                requirejs(['models/company', 'views/company', ], (model, view) => {
+                    let company = new model.model();
+                    $.ajax(_.extend({
+                            url: company.urlRoot,
+                        }, defaultOptionsRequest)
+                    ).done((response) => {
+                        var i = new view.createOrUpdate({
+                            el: '#content',
+                            fields: response.actions.POST
+                        });
+                        i.render();
+                        //app.views.campaign[id].render();
+                        //app.cache[window.location.pathname] = i.$el.html();
+
+                        app.hideLoading();
+                    });
+                });
+            } else {
+                app.routers.navigate(
+                    '/account/login', 
+                    {trigger: true, replace: true}
+                );
+            }
         },
 
         issuerDashboard: function() {
@@ -325,14 +364,29 @@ app.on('urlsReady', function() {
         },
 
         login: function(id) {
-            requirejs(['views/user', ], (userView, userT) => {
-                let loginView = new userView.login({
-                    el: '#content',
-                    template: userT,
-                })
-                loginView.render();
-                app.cache[window.location.pathname] = loginView.$el.html();
-                app.hideLoading();
+            requirejs(['views/user', ], (userView) => {
+                var a1 = $.ajax(_.extend({
+                        url: serverUrl + Urls['rest_login'](),
+                    }, defaultOptionsRequest));
+                var a2 = $.ajax(_.extend({
+                        url: serverUrl + Urls['rest_register'](),
+                    }, defaultOptionsRequest));
+                $.when(a1, a2).done((r1, r2) => {
+                    let loginView = new userView.login({
+                        el: '#content',
+                        login_fields: r1[0].actions.POST,
+                        register_fields: r2[0].actions.POST
+                    })
+                    loginView.render();
+                    app.cache[window.location.pathname] = loginView.$el.html();
+                    app.hideLoading();
+                }).fail((xhr, error) =>  {
+                    // ToDo
+                    // Show global error message
+                    console.log('cant get fields ');
+                    console.log(xhr, error);
+                    app.hideLoading();
+                });
             });
         },
 
@@ -346,11 +400,12 @@ app.on('urlsReady', function() {
         },
     });
 
-    app.routers = new appRoutes();
 
     app.user = new userModel();
 
     app.on('userLoaded', function(data){
+
+        app.routers = new appRoutes();
         app.user.url = serverUrl + Urls['rest_user_details']();
         // if user is not authenticated - add login/sign up popup
         if(data.id == '') {
@@ -415,7 +470,6 @@ app.on('urlsReady', function() {
         if(href.substr(0,1) != '#' && href.substr(0, 4) != 'http' && href.substr(0,3) != 'ftp') {
             event.preventDefault();
             app.showLoading();
-
 
             // If we already have that url in cache - we will just update browser location 
             // and set cache version of the page
