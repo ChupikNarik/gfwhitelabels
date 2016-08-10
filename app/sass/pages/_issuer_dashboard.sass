@@ -1,3 +1,4 @@
+
 .second
 	margin-top: 84px
 
@@ -78,10 +79,8 @@
 			.social-dark
 				display: block
 
-
 .dashboard-stat.grey
 	background: $light_grey
-
 
 .dashboard-stat.grey .details .desc,
 .dashboard-stat.grey .details .number
@@ -209,11 +208,15 @@
 	margin-top: 51px
 	padding-top: 50px
 
+	.grafic-title
+		width: 100%
+		border-bottom: 1px solid $border_color
+
 .third
 	margin-top: 94px
 
 .title-size
-	letter-spacing: 2.3px
+	letter-spacing: 0.32rem
 	font-family: $dosis
 	font-weight: 500
 	margin-bottom: 25px
@@ -232,22 +235,102 @@
 .btn.btn-outline.dark:active:hover,
 .btn.btn-outline.dark:focus,
 .btn.btn-outline.dark:hover
-    border-color: #2f353b
-    color: #fff
-    background-color: #2f353b
+	border-color: #2f353b
+	color: #fff
+	background-color: #2f353b
 
 .portlet>.portlet-title>.actions
-    float: right
-    display: inline-block
-    padding: 6px 0
-    margin-right: 25px
+	float: right
+	display: inline-block
+	padding: 6px 0
+	margin-right: 25px
 
 .btn-circle
-    border-radius: 25px!important
-    overflow: hidden
+	border-radius: 25px!important
+	overflow: hidden
+
+.comments-list
+	border: 1px solid $border_color
+	padding: 13px 9px 0 8px
+
+	::-webkit-scrollbar
+		width: 5px
+		background: transparent
+
+	::-webkit-scrollbar-thumb
+		border-width: 1px 1px 1px 2px
+		border-color: #1a1c1d
+		background-color: #929292
+
+	::-webkit-scrollbar-thumb:hover
+		border-width: 1px 1px 1px 2px
+		border-color: #1c1f22
+		background-color: #000000
+
+	::-webkit-scrollbar-track
+		border-width: 0
+
+	::-webkit-scrollbar-track:hover
+		border-left: none
+
+	.all-comments
+		height: 367px
+		overflow-y: auto
+		margin-top: 13px
+	
+		.one-comment
+			padding: 21px 6px 15px 15px
+			margin-right: 6px
+
+			.user-photo
+				width: 54px
+				height: 54px
+				margin-top: 2px
+				float: left
+				border-radius: 50%
+				overflow: hidden
+
+			.text-and-name
+				margin-left: 70px
+
+				.name-date
+
+					h6
+						letter-spacing: 0.21rem
+
+					span
+						+calc-rem(11)
+						color: $scorpion
+						line-height: 0.6rem
+						letter-spacing: 0.012
+
+				.comment-text
+					float: left
+					padding-top: 5px
+
+					p
+						line-height: 1.15rem
+						letter-spacing: 0.02rem
+
+				.actions
+					text-align: right
+					opacity: 0
+
+					.pending
+						float: left
+						color: $blue
+					a
+						margin: 0 4px
+		
+		.one-comment:hover
+			background: $light_grey
+
+			.text-and-name
+				.actions
+					opacity: 1
 
 .portlet.light.bordered
-    border: 1px solid $border_color
+	border: 1px solid $border_color
 
 .portlet-body
 	padding: 10px 0 20px 0
@@ -257,8 +340,6 @@
 
 .portlet.light>.portlet-title
 	border-bottom: 1px solid $border_color
-	padding: 12px 0 14px 0
-	min-height: 50px
 
 	&>.caption
 		display: inline-block
@@ -282,62 +363,68 @@
 
 .portlet>.portlet-title
 	text-align: left
-	color: $grey
 	padding: 15px 20px 10px
-	font-family: $dosis
 	letter-spacing: 0.5rem
 
-	&>.nav-tabs
-		background: 0 0
-		margin: 1px 0 0
+.leave-comment
+	padding: 24px 9px 20px 18px 
+	border: 1px solid $border_color
+
+	.user-photo
+		width: 54px
+		height: 54px
+		border-radius: 50%
 		float: left
-		display: inline-block
-		border: 0
+		overflow: hidden
 
-.portlet>.portlet-title>.nav-tabs>li
-	display: inline-block
+	.text-and-name
+		margin-left: 68px
 
-.portlet>.portlet-title>.nav-tabs>li.active
-	border: 1px solid $border_color
-	border-bottom: none
-	color: $grey
+		.name-date
 
-	a
-		color: $black_text
+			h6
+				letter-spacing: 0.21rem
+				margin-bottom: -1px
 
-.portlet>.portlet-title>.nav-tabs>li a
-	line-height: 36px
-	padding: 0 20px
-	color: $grey
+			span
+				+calc-rem(11)
+				color: $scorpion
+				line-height: 0.6rem
+				letter-spacing: 0.012
 
-.portlet.comments-body
-	padding: 0 8px
+		.comment-text
+			float: left
+			padding-top: 10px
+			padding-left: 2px
 
-.all_comments
-	height: 334px
-	overflow-y: scroll
+			p
+				line-height: 1.15rem
+				letter-spacing: 0.02rem
+				margin-bottom: 0
 
-.leave_comments
-	padding-bottom: 25px
-	border: 1px solid $border_color
+		.actions
+			text-align: left
+			padding-left: 2px
+			margin-top: 8px
 
-	.write_com
-		margin: 0 auto
-		padding: 0
-		border-bottom: 1px solid $border_color
+			span
+				color: $small-text
+				margin: 0 4px
 
 	.form
 		text-align: right
-		padding-right: 2.5%
+		padding-right: 0
+		margin-top: 10px
+		padding-top: 28px
+		border-top: 1px solid $border_color
 
 		textarea
-			width: 85.5%
+			max-width: 535px
 			border-radius: 3px
-			height: 136px
+			height: 138px
 			float: right
 			resize: none
-			margin-top: 22px
-			margin-bottom: 18px
+			margin-bottom: 19px
 
 .mt-comments
 	.mt-comment
@@ -452,8 +539,6 @@
 		font-size: 24px
 		font-weight: bold
 		letter-spacing: 8px
-
-
 
 	.text_and_button
 		p
